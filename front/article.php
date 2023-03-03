@@ -6,9 +6,11 @@ try {
     die();
 }
 
-$article = $dbh->prepare('SELECT * FROM articles WHERE id = ?');
-$article->execute(array($_GET['id']));
-$article = $article->fetch();
+$article_id = $_GET['id'];
+
+$sql = $dbh->prepare('SELECT * FROM articles WHERE id = :id');
+$sql->execute([':id' => $article_id]);
+$article = $sql->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -43,3 +45,5 @@ $article = $article->fetch();
         </ul>
     </header>
 </div>
+<h1><?= $article['title'] ?></h1><br>
+<p><?= $article['content'] ?></p>
