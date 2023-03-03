@@ -30,13 +30,13 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="Tpblog/front/blog.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            <span class="fs-4">Articles</span>
+            <span class="fs-4">Article <?=$article['title']?></span>
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/Tpblog/front/blog.php" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="/Tpblog/front/blog.php" class="nav-link active">Home</a></li>
             <li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link">Utilisateurs</a></li>
-            <li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link active" aria-current="page" style="margin-right:5px">Articles</a></li>
+            <li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link" aria-current="page" style="margin-right:5px">Articles</a></li>
             <li class="nav-item">
                 <form action="/TPblog/back/deconnexion.php">
                     <button class="btn btn-danger" type="submit">Déconnexion</button>
@@ -45,5 +45,9 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
         </ul>
     </header>
 </div>
-<h1><?= $article['title'] ?></h1><br>
-<p><?= $article['content'] ?></p>
+<div style="margin:20px">
+    <h1><?= $article['title'] ?></h1><br>
+    <p><?= $article['content'] ?></p>
+</div>
+</body>
+</html>
