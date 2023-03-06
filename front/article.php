@@ -24,6 +24,7 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script defer src="../script.js"></script>
 </head>
 <body>
 <div class="container">
@@ -68,14 +69,6 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
         </form>
     </div>
 </div>
-
-<script>
-    document.querySelector("#comment-form-container").style.display = "none";
-
-    document.querySelector("#comment-button").addEventListener("click", function() {
-        document.querySelector("#comment-form-container").style.display = "block";
-    });
-</script>
 
 </body>
 </html>
