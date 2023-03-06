@@ -49,5 +49,33 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
     <h1><?= $article['title'] ?></h1><br>
     <p><?= $article['content'] ?></p>
 </div>
+<div style="margin-left:150px; position:fixed; bottom: 30px;">
+    <button id="comment-button" style="margin-left:15px;" class="btn btn-primary" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 20 20">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+        </svg>
+        Écrire un Commentaire
+    </button>
+
+    <div id="comment-form-container" style="display:none">
+        <form method="post" action="../back/commentaires/ajoutComm.php">
+            <input type="hidden" name="article_id" value="<?= $article_id ?>">
+            <div class="mb-3">
+                <label for="contenu" class="form-label">Commentaire</label>
+                <textarea class="form-control" id="contenu" name="contenu" maxlength="255" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.querySelector("#comment-form-container").style.display = "none";
+
+    document.querySelector("#comment-button").addEventListener("click", function() {
+        document.querySelector("#comment-form-container").style.display = "block";
+    });
+</script>
+
 </body>
 </html>
