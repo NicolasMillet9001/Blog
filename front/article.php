@@ -31,7 +31,7 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="Tpblog/front/blog.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            <span class="fs-4">Article <?=$article['title']?></span>
+            <span class="fs-4">Article : <?=$article['title']?></span>
         </a>
 
         <ul class="nav nav-pills">
@@ -48,7 +48,7 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
 </div>
 <div style="margin:20px">
     <h1><?= $article['title'] ?></h1><br>
-    <p><?= $article['content'] ?></p>
+    <p><?= nl2br($article['content']) ?></p>
 </div>
 <div style="margin-left:150px; position:fixed; bottom: 30px;">
     <button id="comment-button" style="margin-left:15px;" class="btn btn-primary" type="button">
