@@ -70,5 +70,28 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<?php
+// Récupération des commentaires pour l'article en question
+$sql = $dbh->prepare('SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC');
+$sql->execute([':article_id' => $article_id]);
+$comments = $sql->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!-- Affichage des commentaires -->
+<div class="comm" style="margin:20px; position:fixed; bottom: 40px;">
+    <h4>Commentaires</h4>
+    <?php if (count($comments) > 0) : ?>
+        <ul class="comm">
+            <?php foreach ($comments as $comment) : ?>
+                <li>
+                    <p><?= $comment['content'] ?></p>
+                    <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['user_id'] ?> le <?= $comment['created_at'] ?></small>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else : ?>
+        <p>Aucun commentaire pour le moment.</p>
+    <?php endif; ?>
+</div>
 </body>
 </html>
