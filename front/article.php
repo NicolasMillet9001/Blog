@@ -11,6 +11,11 @@ $article_id = $_GET['id'];
 $sql = $dbh->prepare('SELECT * FROM articles WHERE id = :id');
 $sql->execute([':id' => $article_id]);
 $article = $sql->fetch(PDO::FETCH_ASSOC);
+
+// Récupération des commentaires pour l'article en question
+$sql2 = $dbh->prepare('SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC');
+$sql2->execute([':article_id' => $article_id]);
+$comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -46,42 +51,19 @@ $article = $sql->fetch(PDO::FETCH_ASSOC);
         </ul>
     </header>
 </div>
+
 <div style="margin:20px">
     <h1><?= $article['title'] ?></h1><br>
     <p><?= nl2br($article['content']) ?></p>
 </div>
-<div style="margin-left:150px; position:fixed; bottom: 30px;">
-    <button id="comment-button" style="margin-left:15px;" class="btn btn-primary" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 20 20">
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-        </svg>
-        Écrire un Commentaire
-    </button>
 
-    <div id="comment-form-container" style="display:none">
-        <form method="post" action="../back/commentaires/ajoutComm.php">
-            <input type="hidden" name="article_id" value="<?= $article_id ?>">
-            <div class="mb-3">
-                <label for="contenu" class="form-label">Commentaire</label>
-                <textarea class="form-control" id="contenu" name="contenu" maxlength="255" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
-        </form>
-    </div>
-</div>
-
-<?php
-// Récupération des commentaires pour l'article en question
-$sql = $dbh->prepare('SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC');
-$sql->execute([':article_id' => $article_id]);
-$comments = $sql->fetchAll(PDO::FETCH_ASSOC);
-?>
+<hr><br>
 
 <!-- Affichage des commentaires -->
-<div class="comm" style="margin:20px; position:fixed; bottom: 40px;">
+<div class="comm" style="margin:20px; bottom:40px;">
     <h4>Commentaires</h4>
     <?php if (count($comments) > 0) : ?>
-        <ul class="comm">
+        <ul>
             <?php foreach ($comments as $comment) : ?>
                 <li>
                     <p><?= $comment['content'] ?></p>
@@ -93,5 +75,40 @@ $comments = $sql->fetchAll(PDO::FETCH_ASSOC);
         <p>Aucun commentaire pour le moment.</p>
     <?php endif; ?>
 </div>
+
+<div>
+    <button id="comment-button" style="margin-left:150px; bottom:30px; right:30px; display:block;" class="btn btn-primary" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 20 20">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+        </svg>
+        Écrire un Commentaire
+    </button>
+
+    <div id="comment-form-container" style="display:none">
+        <form method="post" action="../back/commentaires/ajoutComm.php">
+            <input type="hidden" name="article_id" value="<?= $article_id ?>">
+            <div class="mb-3">
+                <label for="contenu" class="form-label">Commentaire</label>
+                <textarea cols="50" rows="5" class="form-control" id="contenu" name="contenu" maxlength="255" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
+        </form>
+    </div>
+</div>
+
+<footer style="margin-bottom:15px"></footer>
+
+<script>
+    // Vérifie si la hauteur du contenu est plus petite que la hauteur de la fenêtre
+    if (document.body.clientHeight < window.innerHeight) {
+        // Les commentaires sont en dessous du contenu
+        document.querySelector('.comm').style.marginTop = '20px';
+    } else {
+        // Les commentaires sont tout en bas de la page web
+        document.querySelector('.comm').style.position = 'relative';
+        document.querySelector('.comm').style.bottom = '20';
+    }
+</script>
+
 </body>
 </html>
