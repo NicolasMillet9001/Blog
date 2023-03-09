@@ -29,9 +29,9 @@ $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <script defer src="../script.js"></script>
+    
 </head>
-<body>
+<body style="margin:20px">
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/Tpblog/front/blog.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -52,63 +52,56 @@ $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
     </header>
 </div>
 
-<div style="margin:20px">
+<div>
     <h1><?= $article['title'] ?></h1><br>
     <p><?= nl2br($article['content']) ?></p>
 </div>
 
-<hr><br>
+
 
 <!-- Affichage des commentaires -->
-<div class="comm" style="margin:20px; bottom:40px;">
-    <h4>Commentaires</h4>
-    <?php if (count($comments) > 0) : ?>
-        <ul>
-            <?php foreach ($comments as $comment) : ?>
-                <li>
-                    <p><?= $comment['content'] ?></p>
-                    <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['user_id'] ?> le <?= $comment['created_at'] ?></small>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else : ?>
-        <p>Aucun commentaire pour le moment.</p>
-    <?php endif; ?>
-</div>
+<div id="commDiv">
+    <hr style="width: 400%; align:'center'">
+    <div>
+        <h4>Commentaires</h4>
+        <?php if (count($comments) > 0) : ?>
+            <ul>
+                <?php foreach ($comments as $comment) : ?>
+                    <li>
+                        <p><?= $comment['content'] ?></p>
+                        <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['user_id'] ?> le <?= $comment['created_at'] ?></small>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else : ?>
+            <p>Aucun commentaire pour le moment.</p>
+        <?php endif; ?>
+    </div>
 
-<div>
-    <button id="comment-button" style="margin-left:150px; bottom:30px; right:30px; display:block;" class="btn btn-primary" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 20 20">
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-        </svg>
-        Écrire un Commentaire
-    </button>
+    <div>
+        <button id="comment-button" style="margin-left:150px; bottom:30px; right:30px; display:block;" class="btn btn-primary" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 20 20">
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+            </svg>
+            Écrire un Commentaire
+        </button>
 
-    <div id="comment-form-container" style="display:none">
-        <form method="post" action="../back/commentaires/ajoutComm.php">
-            <input type="hidden" name="article_id" value="<?= $article_id ?>">
-            <div class="mb-3">
-                <label for="contenu" class="form-label">Commentaire</label>
-                <textarea cols="50" rows="5" class="form-control" id="contenu" name="contenu" maxlength="255" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
-        </form>
+        <div id="comment-form-container" style="display:none">
+            <form method="post" action="../back/commentaires/ajoutComm.php">
+                <input type="hidden" name="article_id" value="<?= $article_id ?>">
+                <div class="mb-3">
+                    <label for="contenu" class="form-label">Commentaire</label>
+                    <textarea cols="50" rows="5" class="form-control" id="contenu" name="contenu" maxlength="255" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
+            </form>
+        </div>
     </div>
 </div>
-
 <footer style="margin-bottom:15px"></footer>
 
-<script>
-    // Vérifie si la hauteur du contenu est plus petite que la hauteur de la fenêtre
-    if (document.body.clientHeight < window.innerHeight) {
-        // Les commentaires sont en dessous du contenu
-        document.querySelector('.comm').style.marginTop = '20px';
-    } else {
-        // Les commentaires sont tout en bas de la page web
-        document.querySelector('.comm').style.position = 'relative';
-        document.querySelector('.comm').style.bottom = '20';
-    }
-</script>
+<script src="../script.js"></script>
+<script>loadArticle()</script>
 
 </body>
 </html>
