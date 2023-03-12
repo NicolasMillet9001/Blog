@@ -16,3 +16,10 @@ if (document.body.clientHeight > window.innerHeight) {
     document.querySelector('#commDiv').style.bottom = '20px';
 }
 }
+
+function updateCharCounter() {
+    const textarea = document.getElementById('contenu');
+    const counter = document.getElementById('char-counter');
+    const remainingChars = 255 - textarea.value.length;
+    counter.innerText = `${remainingChars}/255`;
+}

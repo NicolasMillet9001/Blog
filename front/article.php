@@ -13,7 +13,7 @@ $sql->execute([':id' => $article_id]);
 $article = $sql->fetch(PDO::FETCH_ASSOC);
 
 // Récupération des commentaires pour l'article en question
-$sql2 = $dbh->prepare('SELECT * FROM comments WHERE article_id = :article_id ORDER BY created_at DESC');
+$sql2 = $dbh->prepare('SELECT c.*, u.firstname, u.lastname FROM comments AS c JOIN users AS u ON c.user_id = u.id WHERE c.article_id = :article_id ORDER BY c.created_at DESC');
 $sql2->execute([':article_id' => $article_id]);
 $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -69,18 +69,12 @@ $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($comments as $comment) : ?>
                     <li>
                         <p><?= $comment['content'] ?></p>
-                        
-                        <form style="display:inline-block" action="../back/commentaires/modifyComm.php" method="post">
-                            <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
-                            <input type="hidden" name="article_id" value="<?= $article_id ?>">
-                            <button class="btn btn-sm btn-outline-primary" type="submit">Modifier</button>
-                        </form>
                         <form style="display:inline-block" action="../back/commentaires/deleteComm.php" method="post">
                             <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
                             <input type="hidden" name="article_id" value="<?= $article_id ?>">
-                            <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')" class="btn btn-sm btn-outline-danger" type="submit">Supprimer</button>
+                            <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')" class="btn btn-sm btn-danger" type="submit"><i class="bi bi-trash"></i></button>
                         </form>
-                        <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['user_id'] ?> le <?= $comment['created_at'] ?></small><hr>
+                        <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['firstname'] . ' ' . $comment['lastname'] ?> le <?= $comment['created_at'] ?></small><hr>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -102,7 +96,8 @@ $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
                 <input type="hidden" name="article_id" value="<?= $article_id ?>">
                 <div class="mb-3">
                     <label for="contenu" class="form-label">Commentaire</label>
-                    <textarea cols="50" rows="5" class="form-control" id="contenu" name="contenu" maxlength="255" required></textarea>
+                    <textarea cols="50" rows="5" class="form-control" id="contenu" name="contenu" maxlength="255" oninput="updateCharCounter()" required></textarea>
+                    <p id="char-counter">255/255</p>
                 </div>
                 <button type="submit" class="btn btn-primary">Ajouter le commentaire</button>
             </form>
