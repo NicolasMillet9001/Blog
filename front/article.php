@@ -69,7 +69,18 @@ $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($comments as $comment) : ?>
                     <li>
                         <p><?= $comment['content'] ?></p>
-                        <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['user_id'] ?> le <?= $comment['created_at'] ?></small>
+                        
+                        <form style="display:inline-block" action="../back/commentaires/modifyComm.php" method="post">
+                            <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                            <input type="hidden" name="article_id" value="<?= $article_id ?>">
+                            <button class="btn btn-sm btn-outline-primary" type="submit">Modifier</button>
+                        </form>
+                        <form style="display:inline-block" action="../back/commentaires/deleteComm.php" method="post">
+                            <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
+                            <input type="hidden" name="article_id" value="<?= $article_id ?>">
+                            <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')" class="btn btn-sm btn-outline-danger" type="submit">Supprimer</button>
+                        </form>
+                        <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['user_id'] ?> le <?= $comment['created_at'] ?></small><hr>
                     </li>
                 <?php endforeach; ?>
             </ul>
