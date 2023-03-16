@@ -51,6 +51,7 @@ $users = $dbh->query('SELECT * FROM users');
         <td style="margin-left:15px;">Prénom</td>
         <td>Nom</td>
         <td>Email</td>
+        <td>Rôle</td>
         <td>Créé le</td>
         <td>Actions</td>
     </tr>
@@ -61,6 +62,7 @@ $users = $dbh->query('SELECT * FROM users');
             <td style="margin-left:15px;"><?= $user['firstname'] ?></td>
             <td><?= $user['lastname'] ?></td>
             <td><?= $user['email'] ?></td>
+            <td><?php switch($user['role_id']){case 1: echo 'admin'; break; case 2: echo 'auteur'; break; case 3: echo 'user'; break;} ?></td>
             <td>
                 <?php
                 $createdAt = new DateTime($user['created_at']);
