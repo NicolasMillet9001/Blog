@@ -74,7 +74,7 @@ if ($_SESSION['role']==1){
     </thead>
     <tbody>
     <?php foreach ($articles->fetchAll() as $articles) : ?>
-        <tr>
+        <tr class="artLine">
             <td style="margin-left:15px;"><a href="article.php?id=<?= $articles['id'] ?>"><?= $articles['title'] ?></td>
             <td><?= strlen($articles['content']) > 100 ? substr($articles['content'], 0, 100) . '...' : $articles['content'] ?></td>
             <td><?= $articles['published_at'] ?></td>
