@@ -9,7 +9,7 @@ try {
 
 
 
-$query = $dbh->prepare('SELECT id, firstname, lastname, email, password FROM users WHERE email = ?');
+$query = $dbh->prepare('SELECT id, firstname, lastname, email, role_id, password FROM users WHERE email = ?');
 $query->execute([$_POST['email']]);
 $user = $query->fetch();
 
@@ -28,6 +28,7 @@ if (!$user) {
         $_SESSION['connection_id'] = $user['id'];
         $_SESSION['connection_firstname'] = $user['firstname'];
         $_SESSION['connection_lastname'] = $user['lastname'];
+        $_SESSION['role'] = $user['role_id'];
 
         header('location: /tpblog/front/blog.php');
         exit;

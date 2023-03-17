@@ -1,5 +1,5 @@
 <?php
-include '../back/checkIsConnected.php'
+include '../checkIsConnected.php'
 ?>
 
 <!doctype html>
@@ -22,11 +22,14 @@ include '../back/checkIsConnected.php'
             <span class="fs-4">Update User</span>
         </a>
 
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/Tpblog/front/blog.php" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link">Utilisateurs</a></li>
-            <li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link" style="margin-right:5px">Articles</a></li>
-            <li class="nav-item">
+        <ul style="margin-left:5px;" class="nav nav-pills">
+            <li class="nav-item"><a href="/Tpblog/front/blog.php" class="nav-link" aria-current="page">Home</a></li>
+            <?php 
+            echo ($_SESSION['role']==1) ? '<li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link active" aria-current="page">Utilisateurs</a></li><li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link" style="margin-right:5px">Articles</a></li>' : '';
+            echo ($_SESSION['role']==2) ? '<li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link" style="margin-right:5px">Mes Articles</a></li><li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link active" type="submit">Compte</form></button></li>' : '';
+            echo ($_SESSION['role']==3) ? '<li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link active" type="submit">Compte</form></button></li>' : '';
+            ?>
+            <li style="margin-left:5px;" class="nav-item">
                 <form action="/Tpblog/back/deconnexion.php">
                     <button class="btn btn-danger" type="submit">Déconnexion</button>
                 </form>

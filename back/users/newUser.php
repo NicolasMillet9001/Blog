@@ -1,5 +1,5 @@
 <?php
-include 'C:\laragon\www\Tpblog\back\checkIsConnected.php'
+include '../checkIsConnected.php';
 ?>
 
 <!doctype html>
@@ -19,7 +19,7 @@ include 'C:\laragon\www\Tpblog\back\checkIsConnected.php'
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="Tpblog/front/blog.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            <span class="fs-4">Update Article</span>
+            <span class="fs-4">Écrire un article</span>
         </a>
 
         <ul class="nav nav-pills">
@@ -37,30 +37,29 @@ include 'C:\laragon\www\Tpblog\back\checkIsConnected.php'
         </ul>
     </header>
 
+<form action="createUser.php" method="post">
+    <label class="form-label" for="firstname">Prénom :</label>
+    <input class="form-control" id="firstname" type="text" name="firstname">
 
+    <label class="form-label mt-3" for="lastname">Nom :</label><br>
+    <input class="form-control" id="lastname" type="text" name="lastname"><br>
 
+    <label for="role_id">Attribuer un rôle:</label>
+    <select name="role_id" id="role_id">
+        <option value="">--Choix du rôle--</option>
+        <option value="1">Administrateur</option>
+        <option value="2">Auteur</option>
+        <option value="3">utilisateur</option>    
+    </select>
 
-<?php
-try {
-    $dbh = new PDO('mysql:host=localhost;dbname=tp1', 'root', 'user');
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+    <br><label class="form-label mt-3" for="email">Adresse mail :</label><br>
+    <input class="form-control" id="email" type="text" name="email">
+	
+    <label class="form-label mt-3" for="password">Mot de Passe :</label><br>
+    <input class="form-control" id="password" type="text" name="password">
 
-$query = $dbh->prepare('SELECT id, title, content FROM articles WHERE id = ?');
-$query->execute([$_POST['article_id']]);
-
-$articles = $query->fetch();
-?>
-
-<form action="update.php" method="post">
-    <input type="text" name="article_id" value="<?= $articles['id'] ?>" hidden>
-    <label class="form-label" for="title">Titre :</label>
-    <input class="form-control" id="title" type="text" name="title" value="<?= $articles['title'] ?>">
-    <label class="form-label mt-3" for="content">Contenu :</label>
-    <textarea rows="10" class="form-control" id="content" type="text" name="content" value="<?= $articles['content'] ?>"></textarea>
-
-    <button class="btn btn-primary mt-3" type="submit">Modifier</button>
+    <input style="padding:10px" type="submit" value="Enregistrer">   
 </form>
 
+</body>
+</html>

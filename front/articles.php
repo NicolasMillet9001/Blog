@@ -24,9 +24,12 @@ include '../back/checkIsConnected.php'
 
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="/Tpblog/front/blog.php" class="nav-link">Home</a></li>
-            <li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link">Utilisateurs</a></li>
-            <li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link active" aria-current="page" style="margin-right:5px">Articles</a></li>
-            <li class="nav-item">
+            <?php 
+            echo ($_SESSION['role']==1) ? '<li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link" aria-current="page">Utilisateurs</a></li><li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link active" style="margin-right:5px">Articles</a></li>' : '';
+            echo ($_SESSION['role']==2) ? '<li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link active" style="margin-right:5px">Mes Articles</a></li><li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link" type="submit">Compte</form></button></li>' : '';
+            echo ($_SESSION['role']==3) ? '<li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link" type="submit">Compte</form></button></li>' : '';
+            ?>
+            <li style="margin-left:5px;" class="nav-item">
                 <form action="/TPblog/back/deconnexion.php">
                     <button class="btn btn-danger" type="submit">Déconnexion</button>
                 </form>
@@ -51,7 +54,12 @@ try {
     die();
 }
 
-$articles = $dbh->query('SELECT * FROM articles');
+if ($_SESSION['role']==1){
+    $articles = $dbh->query('SELECT * FROM articles');
+} else {
+    $articles = $dbh->query('SELECT * FROM articles WHERE user_id = ' . $_SESSION['connection_id']);
+};
+
 ?>
 
 <table class="table table-striped">
@@ -66,7 +74,7 @@ $articles = $dbh->query('SELECT * FROM articles');
     </thead>
     <tbody>
     <?php foreach ($articles->fetchAll() as $articles) : ?>
-        <tr class="artLine">
+        <tr>
             <td style="margin-left:15px;"><a href="article.php?id=<?= $articles['id'] ?>"><?= $articles['title'] ?></td>
             <td><?= strlen($articles['content']) > 100 ? substr($articles['content'], 0, 100) . '...' : $articles['content'] ?></td>
             <td><?= $articles['published_at'] ?></td>

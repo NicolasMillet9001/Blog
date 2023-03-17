@@ -1,4 +1,6 @@
 <?php
+include '../back/checkIsConnected.php';
+
 try {
     $dbh = new PDO('mysql:host=localhost;dbname=tp1', 'root', 'user');
 } catch (PDOException $e) {
@@ -13,7 +15,7 @@ $sql->execute([':id' => $article_id]);
 $article = $sql->fetch(PDO::FETCH_ASSOC);
 
 // Récupération des commentaires pour l'article en question
-$sql2 = $dbh->prepare('SELECT c.*, u.firstname, u.lastname FROM comments AS c JOIN users AS u ON c.user_id = u.id WHERE c.article_id = :article_id ORDER BY c.created_at DESC');
+$sql2 = $dbh->prepare('SELECT c.*, u.firstname, u.lastname, u.id FROM comments AS c JOIN users AS u ON c.user_id = u.id WHERE c.article_id = :article_id ORDER BY c.created_at DESC');
 $sql2->execute([':article_id' => $article_id]);
 $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -41,9 +43,12 @@ $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
 
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="/Tpblog/front/blog.php" class="nav-link active">Home</a></li>
-            <li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link">Utilisateurs</a></li>
-            <li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link" aria-current="page" style="margin-right:5px">Articles</a></li>
-            <li class="nav-item">
+            <?php 
+            echo ($_SESSION['role']==1) ? '<li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link active" aria-current="page">Utilisateurs</a></li><li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link" style="margin-right:5px">Articles</a></li>' : '';
+            echo ($_SESSION['role']==2) ? '<li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link" style="margin-right:5px">Mes Articles</a></li><li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link" type="submit">Compte</form></button></li>' : '';
+            echo ($_SESSION['role']==3) ? '<li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link" type="submit">Compte</form></button></li>' : '';
+            ?>
+            <li style="margin-left:5px;" class="nav-item">
                 <form action="/TPblog/back/deconnexion.php">
                     <button class="btn btn-danger" type="submit">Déconnexion</button>
                 </form>
@@ -69,11 +74,11 @@ $comments = $sql2->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($comments as $comment) : ?>
                     <li>
                         <p><?= $comment['content'] ?></p>
-                        <form style="display:inline-block" action="../back/commentaires/deleteComm.php" method="post">
-                            <input type="hidden" name="comment_id" value="<?= $comment['id'] ?>">
-                            <input type="hidden" name="article_id" value="<?= $article_id ?>">
-                            <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')" class="btn btn-sm btn-danger" type="submit"><i class="bi bi-trash"></i></button>
-                        </form>
+                        <?php echo ((isset($_SESSION['role']) && $_SESSION['role']==1) || $_SESSION['connection_id']==$comment['user_id']) ? '<form style="display:inline-block" action="../back/commentaires/deleteComm.php" method="post">
+                            <input type="hidden" name="comment_id" value="'. $comment['id'] .'">
+                            <input type="hidden" name="article_id" value="'. $article_id .'">
+                            <button onclick="return confirm(`Êtes-vous sûr de vouloir supprimer ce commentaire ?`)" class="btn btn-sm btn-danger" type="submit"><i class="bi bi-trash"></i></button>
+                        </form>' : ''; ?> 
                         <small style="font-style: italic; color: rgba(19, 41, 49, 0.5);">Posté par <?= $comment['firstname'] . ' ' . $comment['lastname'] ?> le <?= $comment['created_at'] ?></small><hr>
                     </li>
                 <?php endforeach; ?>
