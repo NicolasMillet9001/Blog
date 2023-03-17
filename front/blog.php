@@ -54,8 +54,8 @@ $articles = $dbh->query('SELECT * FROM articles');
     <tr>
         <td style="margin-left:15px;">Titre</td>
         <td>Contenu</td>
+        <td>Écrit par</td>
         <td>Publié le</td>
-        <td>Créé le</td>
     </tr>
     </thead>
     <tbody>
@@ -63,8 +63,8 @@ $articles = $dbh->query('SELECT * FROM articles');
         <tr class="artLine" onclick="location.href='article.php?id=<?= $articles['id'] ?>'">
             <td style="margin-left:15px;"><a href="article.php?id=<?= $articles['id'] ?>"><?= $articles['title'] ?></td>
             <td><?= strlen($articles['content']) > 100 ? substr($articles['content'], 0, 100) . '...' : $articles['content'] ?></td>
-            <td><?= $articles['published_at'] ?></td>
-            <td><?= $articles['created_at'] ?></td>
+            <td><?= $articles['user_id'] ?></td>
+            <td><?= substr($articles['published_at'],0,-3) ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
