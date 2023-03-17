@@ -54,7 +54,12 @@ try {
     die();
 }
 
-$articles = $dbh->query('SELECT * FROM articles');
+if ($_SESSION['role']==1){
+    $articles = $dbh->query('SELECT * FROM articles');
+} else {
+    $articles = $dbh->query('SELECT * FROM articles WHERE user_id = ' . $_SESSION['connection_id']);
+};
+
 ?>
 
 <table class="table table-striped">
