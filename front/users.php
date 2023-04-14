@@ -46,41 +46,37 @@ include '../back/checkIsConnected.php'
 </div>
 
 <?php
-try {
-    $dbh = new PDO('mysql:host=localhost;dbname=tp1', 'root', 'user');
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
+require "../back/config/database.php";
+require "../back/models/User.php";
 
-$users = $dbh->query('SELECT * FROM users');
+$userModel = new User();
+$users = $userModel->getAll();
 ?>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <td style="margin-left:15px;">Prénom</td>
-        <td>Nom</td>
-        <td>Email</td>
-        <td>Rôle</td>
-        <td>Créé le</td>
-        <td>Actions</td>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($users->fetchAll() as $user) : ?>
+<div class="container">
+    <table class="table">
+        <thead>
         <tr>
-            <td style="margin-left:15px;"><?= $user['firstname'] ?></td>
-            <td><?= $user['lastname'] ?></td>
-            <td><?= $user['email'] ?></td>
-            <td><?php switch($user['role_id']){case 1: echo 'admin'; break; case 2: echo 'auteur'; break; case 3: echo 'user'; break;} ?></td>
-            <td>
-                <?php
-                $createdAt = new DateTime($user['created_at']);
-                echo $createdAt->format('d/m/Y H:i');
-                ?>
-            </td>
-            <td>
+            <th scope="col">#</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Rôle</th>            
+            <th scope="col">Crée le</th>
+            <th scope="col">Actions</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($users as $user) : ?>
+            <tr>
+                <th scope="row"><?= $user['id'] ?></th>
+                <td><?= $user['firstname'] ?></td>
+                <td><?= $user['lastname'] ?></td>
+                <td><?= $user['email'] ?></td>
+                <td><?php switch($user['role_id']){case 1: echo'Administrateur';break;case 2: echo'Auteur';break;case 3: echo'Utilisateur';break;} ?></td>
+                <td><?= $user['created_at'] ?></td>
+                <td>
                 <div class="d-flex">
                     <form action="../back/users/updateForm.php" method="post">
                         <input type="text" name="user_id" value="<?= $user['id'] ?>" hidden>
@@ -92,9 +88,10 @@ $users = $dbh->query('SELECT * FROM users');
                     </form>
                 </div>
             </td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
