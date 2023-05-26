@@ -11,5 +11,5 @@ $query = $dbh->prepare('UPDATE articles SET title = :title, content = :content W
 $query->execute(['title' => $_POST['title'], 'content' => $_POST['content'], 'article_id' => $_POST['article_id']]);
 
 
-header("location: /Tpblog/front/articles.php");
+header("location: /front/articles.php");
 ?>

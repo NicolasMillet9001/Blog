@@ -20,6 +20,6 @@ $query->execute([
     'user_id' => $user_id
 ]);
 
-header('Location: /Tpblog/front/article.php?id='.$article_id);
+header('Location: /front/article.php?id='.$article_id);
 exit();
 ?>

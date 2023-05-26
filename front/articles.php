@@ -12,25 +12,25 @@ include '../back/checkIsConnected.php'
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/Tpblog/style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <a href="/Tpblog/front/articles.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <a href="/front/articles.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
             <span class="fs-4">Articles</span>
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/Tpblog/front/blog.php" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="/front/blog.php" class="nav-link">Home</a></li>
             <?php 
-            echo ($_SESSION['role']==1) ? '<li class="nav-item"><a href="/Tpblog/front/users.php" class="nav-link" aria-current="page">Utilisateurs</a></li><li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link active" style="margin-right:5px">Articles</a></li>' : '';
-            echo ($_SESSION['role']==2) ? '<li class="nav-item"><a href="/Tpblog/front/articles.php" class="nav-link active" style="margin-right:5px">Mes Articles</a></li><li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link" type="submit">Compte</form></button></li>' : '';
+            echo ($_SESSION['role']==1) ? '<li class="nav-item"><a href="/front/users.php" class="nav-link" aria-current="page">Utilisateurs</a></li><li class="nav-item"><a href="/front/articles.php" class="nav-link active" style="margin-right:5px">Articles</a></li>' : '';
+            echo ($_SESSION['role']==2) ? '<li class="nav-item"><a href="/front/articles.php" class="nav-link active" style="margin-right:5px">Mes Articles</a></li><li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link" type="submit">Compte</form></button></li>' : '';
             echo ($_SESSION['role']==3) ? '<li class="nav-item"><form action="../back/users/updateForm.php" method="post"><input type="text" name="user_id" value="'. $_SESSION['connection_id'] .'" hidden><button class="btn btn-light nav-link" type="submit">Compte</form></button></li>' : '';
             ?>
             <li style="margin-left:5px;" class="nav-item">
-                <form action="/TPblog/back/deconnexion.php">
+                <form action="/back/deconnexion.php">
                     <button class="btn btn-danger" type="submit">Déconnexion</button>
                 </form>
             </li>
@@ -38,7 +38,7 @@ include '../back/checkIsConnected.php'
     </header>
 </div>
 <div style="margin-left:150px">
-    <button style="margin-left:15px;" class="btn btn-primary" type="button" onclick="location='/Tpblog/back/articles/newArticle.php'">
+    <button style="margin-left:15px;" class="btn btn-primary" type="button" onclick="location='/back/articles/newArticle.php'">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 20 20">
             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
         </svg>

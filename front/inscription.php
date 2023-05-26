@@ -8,7 +8,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
-    <link rel="stylesheet" href="/tpblog/style.css">
+    <link rel="stylesheet" href="../style.css">
     
 </head>
 <body>
@@ -16,9 +16,9 @@ session_start();
     <div>
         <h1>
             Inscription
-            <button class="button" style="padding: 10px; font-size:15px; "onclick="location='/Tpblog/front/connexion.php'">Se connecter</button>
+            <button class="button" style="padding: 10px; font-size:15px; "onclick="location='/front/connexion.php'">Se connecter</button>
         </h1>
-        <form style="margin-top:40px" action="/Tpblog/back/inscription.php" method="post">
+        <form style="margin-top:40px" action="/back/inscription.php" method="post">
             <label class="form-label" for="firstname">Prénom</label>
             <input class="form-control" id="firstname" type="text" name="firstname">
 

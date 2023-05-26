@@ -19,6 +19,6 @@ $query->execute([
     'user_id' => $_SESSION['connection_id']
 ]);
 
-header('Location: /Tpblog/front/articles.php');
+header('Location: /front/articles.php');
 exit();
 ?>

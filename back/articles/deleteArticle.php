@@ -9,5 +9,5 @@ try {
 $query = $dbh->prepare("DELETE FROM articles WHERE id = ?");
 $query->execute([$_POST['article_id']]);
 
-header("location: /Tpblog/front/articles.php");
+header("location: /front/articles.php");
 ?>

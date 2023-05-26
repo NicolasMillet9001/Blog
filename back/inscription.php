@@ -26,4 +26,3 @@ session_start();
     header ('location: ../front/connexion.php');
     exit;
 ?>
-    

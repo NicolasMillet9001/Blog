@@ -1,3 +1,3 @@
 <?php
-header ('Location: /Tpblog/front/connexion.php');
+header ('Location: /front/connexion.php');
 ?>

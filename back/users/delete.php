@@ -9,5 +9,5 @@ try {
 $query = $dbh->prepare("DELETE FROM users WHERE id = ?");
 $query->execute([$_POST['user_id']]);
 
-header("location: /Tpblog/front/users.php");
+header("location: /front/users.php");
 ?>

@@ -17,7 +17,7 @@ $user = $query->fetch();
 if (!$user) {
     $_SESSION['connection_error_email'] = "L'email est incorrect !";
 
-    header('location: /tpblog/front/connexion.php');
+    header('location: /front/connexion.php');
     exit;
 } else {
     unset($_SESSION['connection_error_email']);
@@ -30,12 +30,12 @@ if (!$user) {
         $_SESSION['connection_lastname'] = $user['lastname'];
         $_SESSION['role'] = $user['role_id'];
 
-        header('location: /tpblog/front/blog.php');
+        header('location: /front/blog.php');
         exit;
     } else {
         $_SESSION['connection_error_password'] = "Le mot de passe est incorrect !";
 
-        header('location: /tpblog/front/connexion.php');
+        header('location: /front/connexion.php');
         exit;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
 if (!$_SESSION['is_connected']) {
-    header('location: /Tpblog/front/connexion.php');
+    header('location: /front/connexion.php');
 }
 ?>

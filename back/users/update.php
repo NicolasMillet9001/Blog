@@ -14,5 +14,5 @@ if (!empty($_POST['motdepasse'])) {
     $query->execute(['firstname' => $_POST['prenom'], 'lastname' => $_POST['nom'], 'email' => $_POST['email'], 'user_id' => $_POST['user_id']]);
 }
 
-header("location: /Tpblog/front/users.php");
+header("location: /front/users.php");
 ?>

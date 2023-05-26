@@ -22,6 +22,6 @@ $query->execute([
     'password' => $password
 ]);
 
-header('Location: /Tpblog/front/users.php');
+header('Location: /front/users.php');
 exit();
 ?>

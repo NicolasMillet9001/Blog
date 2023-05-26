@@ -8,17 +8,17 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
-    <link rel="stylesheet" href="/tpblog/style.css">
+    <link rel="stylesheet" href="../style.css">
     
 </head>
 <body>    
     <div>
         <h1>
             Connexion 
-            <button class="button" style="padding: 10px 25px 10px 25px; font-size:15px;"onclick="location='/Tpblog/front/inscription.php'">S'inscrire</button>
+            <button class="button" style="padding: 10px 25px 10px 25px; font-size:15px;"onclick="location='/front/inscription.php'">S'inscrire</button>
         </h1>
         
-        <form style="margin-top:40px" action="/Tpblog/back/connexion.php" method="post">
+        <form style="margin-top:40px" action="/back/connexion.php" method="post">
             <label for="email">Email</label>
             <input id="email" type="email" name="email">
 

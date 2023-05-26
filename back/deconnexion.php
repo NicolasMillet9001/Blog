@@ -2,5 +2,5 @@
 session_start();
 unset($_SESSION['is_connected']);
 
-header('location: /Tpblog/front/connexion.php');
+header('location: /front/connexion.php');
 ?>
