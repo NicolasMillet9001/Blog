@@ -74,7 +74,12 @@ $users = $userModel->getAll();
                 <td><?= $user['firstname'] ?></td>
                 <td><?= $user['lastname'] ?></td>
                 <td><?= $user['email'] ?></td>
-                <td><?php switch($user['role_id']){case 1: echo'Administrateur';break;case 2: echo'Auteur';break;case 3: echo'Utilisateur';break;} ?></td>
+                <td><?php switch($user['role_id']){   
+                    case 1: echo 'Administrateur'; break; 
+                    case 2: echo 'Auteur'; break; 
+                    case 3: echo 'Utilisateur'; break;
+                }?>
+                </td>
                 <td><?= $user['created_at'] ?></td>
                 <td>
                 <div class="d-flex">
